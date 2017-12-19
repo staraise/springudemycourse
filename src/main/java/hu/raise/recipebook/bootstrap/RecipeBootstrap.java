@@ -4,6 +4,7 @@ import hu.raise.recipebook.domain.*;
 import hu.raise.recipebook.repositories.CategoryRepository;
 import hu.raise.recipebook.repositories.RecipeRepository;
 import hu.raise.recipebook.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent>{
 
@@ -29,6 +31,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event){
         recipeRepository.saveAll(getRecipes());
+        log.debug("all data are saved");
     }
 
     private List<Recipe> getRecipes(){
@@ -79,6 +82,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         UnitOfMeasure dashUom = dashUomOptional.get();
         UnitOfMeasure pintUom = dashUomOptional.get();
         UnitOfMeasure cupsUom = cupsUomOptional.get();
+
 
         //get Categories
         Optional<Category> americanCategoryOptional = categoryRepository.findByCategoryName("American");
